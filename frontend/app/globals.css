@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 95%;
+  --foreground: 0 0% 7%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 51%;
+  --border: 0 0% 82%;
+  --card: 0 0% 98%;
+  --accent: 174 42% 89%;
+  --accent-foreground: 174 63% 17%;
+  --destructive: 8 87% 61%;
+  --font-clash: "Clash Display";
+  --font-satoshi: "Satoshi";
+}
+
+.dark {
+  --background: 0 0% 7%;
+  --foreground: 0 0% 95%;
+  --muted: 0 0% 13%;
+  --muted-foreground: 0 0% 62%;
+  --border: 0 0% 22%;
+  --card: 0 0% 10%;
+  --accent: 174 17% 18%;
+  --accent-foreground: 174 45% 78%;
+  --destructive: 8 80% 64%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+.editorial-transition {
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.scrollbar-soft {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.scrollbar-soft::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-soft::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: hsl(var(--foreground));
+}
