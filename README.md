@@ -98,9 +98,15 @@ When `GEMINI_API_KEY` is configured, the backend uses Gemini 2.5 Flash first. If
 
 ## Deployment
 
-- Frontend: Vercel. Set `NEXT_PUBLIC_API_URL` to the deployed backend URL.
-- Backend: Railway or Render. Set `GEMINI_API_KEY`, `NODE_ENV=production`, and `FRONTEND_ORIGIN`.
+- Recommended: Render Blueprint using `render.yaml`. It creates one Node web service for the Next.js frontend and one Node web service for the Express API without converting the backend to serverless.
+- Required secret: set `GEMINI_API_KEY` in Render when creating the Blueprint. Do not commit API keys to git.
+- Monorepo root: repository root for both services.
+- Backend build/start: `npm ci --include=dev && npm run build -w backend`, then `npm run start -w backend`.
+- Frontend build/start: `npm ci --include=dev && npm run build -w frontend`, then `npm run start -w frontend`.
+- Health check: backend `/health`, frontend `/`.
 - Docker: create `backend/.env` from `backend/.env.example`, set `GEMINI_API_KEY`, then run `docker compose up --build`.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the exact deployment guide and post-deployment verification checklist.
 
 ## Audit Note
 

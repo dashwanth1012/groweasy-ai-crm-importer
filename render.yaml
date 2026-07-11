@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: groweasy-ai-crm-importer-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --include=dev && npm run build -w backend
+    startCommand: npm run start -w backend
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 22.13.1
+      - key: PORT
+        value: 10000
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FRONTEND_ORIGIN
+        fromService:
+          type: web
+          name: groweasy-ai-crm-importer-web
+          envVarKey: RENDER_EXTERNAL_URL
+    buildFilter:
+      paths:
+        - backend/**
+        - package.json
+        - package-lock.json
+        - render.yaml
+
+  - type: web
+    name: groweasy-ai-crm-importer-web
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --include=dev && npm run build -w frontend
+    startCommand: npm run start -w frontend
+    healthCheckPath: /
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 22.13.1
+      - key: PORT
+        value: 10000
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: groweasy-ai-crm-importer-api
+          envVarKey: RENDER_EXTERNAL_URL
+    buildFilter:
+      paths:
+        - frontend/**
+        - package.json
+        - package-lock.json
+        - render.yaml
